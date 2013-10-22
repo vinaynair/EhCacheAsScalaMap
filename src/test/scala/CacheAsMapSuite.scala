@@ -40,7 +40,8 @@ class CacheAsMapSuite extends FunSuite {
     m("apple") = "fruit"
     m("potato") = "vegetable"
     m("grapes") = "fruit"
-    assert(m.filter(kv => "fruit".equals(kv._2)).size == 2)
+    val filteredResults=m.filter { case(key,value) => "fruit".equals(value) }
+    assert(filteredResults.size == 2)
   }
 
   test("transform on a cache using a function"){

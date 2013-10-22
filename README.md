@@ -1,6 +1,6 @@
 # EhCache as Scala Map
 Exposing relevant EhCache features as a [scala mutable Map](http://docs.scala-lang.org/overviews/collections/maps.html) provides interesting possibilities for use & integration.
-*Note* By merely switching the ehcache implementation with [BigMemory](http://terracotta.org/documentation/4.0/bigmemorymax), we can exploit the same set of
+*Note* by merely switching the ehcache implementation with [BigMemory](http://terracotta.org/documentation/4.0/bigmemorymax), we can exploit the same set of
 features with local offheap in-memory store as well as clustered caches.
 
 Apart from the obvious type-safety with a Map, other obvious features include:-
@@ -14,7 +14,7 @@ m(1) = "a"
 m += (2 -> "b")
 //or since its mutable
 m+(3->"c")
-//or add to cache maps
+//or to add 2 cache maps together
 val n = new CacheAsMap[Int,String]()
 n(4)="d"
 n++=m
@@ -40,9 +40,9 @@ m("apple") = "fruit"
 m("potato") = "vegetable"
 m("grapes") = "fruit"
 //now filter
-//For a key value pair, kv, kv._1 is the key and kv._2 is the value
 
-val filteredResults= m.filter( kv => "fruit".equals(kv._2) )
+//For a key value pair, kv, kv._1 is the key and kv._2 is the value
+ val filteredResults=m.filter { case(key,value) => "fruit".equals(value) }
 ```
 
 
