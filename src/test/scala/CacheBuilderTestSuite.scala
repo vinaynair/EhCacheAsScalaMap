@@ -17,7 +17,7 @@ class CacheBuilderTestSuite extends FunSuite {
     assert(cache.get("a").getObjectValue == "b")
   }
   test("basic offheap supported cache") {
-    val cache = new CacheBuilder(name = "offHeapCache", maxBytesLocalOffHeap = 256, maxEntriesInHeap = 1).build
+    val cache = new CacheBuilder(name = "offHeapCache", maxBytesLocalOffHeapInMB = 256, maxEntriesInHeap = 1).build
     assert(cache != null)
     for (i <- 1 to 2000)
       cache.put(new Element(i, i))

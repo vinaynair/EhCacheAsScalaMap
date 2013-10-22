@@ -11,7 +11,7 @@ import net.sf.ehcache.{Cache, CacheManager}
 class CacheBuilder(val managerName: String = "cacheManager",
                    val name: String = "cache",
                    val maxEntriesInHeap: Int = 1000,
-                   val maxBytesLocalOffHeap: Long = 0,
+                   val maxBytesLocalOffHeapInMB: Long = 0,
                    val eternal: Boolean = false,
                    val timeToIdle: Int = 0,
                    val timeToLive: Int = 0,
@@ -45,7 +45,7 @@ class CacheBuilder(val managerName: String = "cacheManager",
         .timeToIdleSeconds(timeToIdle)
         .timeToLiveSeconds(timeToLive)
     //add offheap, if set
-    if (maxBytesLocalOffHeap > 0) cacheConfiguration.maxBytesLocalOffHeap(maxBytesLocalOffHeap, MemoryUnit.MEGABYTES)
+    if (maxBytesLocalOffHeapInMB > 0) cacheConfiguration.maxBytesLocalOffHeap(maxBytesLocalOffHeapInMB, MemoryUnit.MEGABYTES)
     //add clustered, if set
     if (terracottaServerUrl != null) {
       cacheConfiguration.terracotta(new TerracottaConfiguration())
