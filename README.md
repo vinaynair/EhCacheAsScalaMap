@@ -1,6 +1,9 @@
-# EhCacheAsScalaMap
-Expose select EhCache features as a [scala mutable Map](http://docs.scala-lang.org/overviews/collections/maps.html), providing interesting possibilities for integration.
-Apart from the obvious type-safety, other obvious map features include:-
+# EhCache as Scala Map
+Exposing relevant EhCache features as a [scala mutable Map](http://docs.scala-lang.org/overviews/collections/maps.html) provides interesting possibilities for use & integration.
+*Note* By merely switching the ehcache implementation with [BigMemory](http://terracotta.org/documentation/4.0/bigmemorymax), we can exploit the same set of
+features with local offheap in-memory store as well as clustered caches.
+
+Apart from the obvious type-safety with a Map, other obvious features include:-
 
 ### Add
 ```java
@@ -54,3 +57,10 @@ val filteredResults= m.filter( kv => "fruit".equals(kv._2) )
 ```
 
 
+
+## Building & running samples
+Use [SBT](http://www.scala-sbt.org) and run the unit tests
+
+
+## TODO
+* Figure how to have a *BigMemory* profile within SBT along with the opensource ehcache to test and try BigMemory features
