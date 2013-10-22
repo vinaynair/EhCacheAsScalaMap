@@ -14,14 +14,22 @@ class CacheAsMapSuite extends FunSuite {
     assert(m.filter(kv => "fruit".equals(kv._2)).size == 2)
   }
 
-  test("add, remove and get"){
-    val m= new CacheAsMap[Int,String]
-    m(1)="a"
-    m+=(2->"b")
-    assert(2==m.size)
-    m-=2
-    assert(1==m.size)
-    assert("a"==m(1))
+  test("add, remove and get") {
+    val m = new CacheAsMap[Int, String]
+    m(1) = "a"
+    m += (2 -> "b")
+    assert(2 == m.size)
+    m -= 2
+    assert(1 == m.size)
+    assert("a" == m(1))
+  }
+
+  test("cache configuration") {
+    val m = new CacheAsMap[Int, String](new CacheBuilder(name = "myCache", maxEntriesInHeap = 1000))
+    for (i <- 1 to 2000) {
+      m(i) = "value-" + i
+    }
+    assert(m.size>=1000)
   }
 
 }
