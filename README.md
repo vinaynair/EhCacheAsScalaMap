@@ -42,7 +42,7 @@ m("grapes") = "fruit"
 //now filter
 
 //For a key value pair, kv, kv._1 is the key and kv._2 is the value
- val filteredResults=m.filter { case(key,value) => "fruit".equals(value) }
+val filteredResults=m.filter { case(key,value) => value.equals("fruit") }
 ```
 
 

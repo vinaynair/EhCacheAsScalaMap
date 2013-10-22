@@ -40,7 +40,7 @@ class CacheAsMapSuite extends FunSuite {
     m("apple") = "fruit"
     m("potato") = "vegetable"
     m("grapes") = "fruit"
-    val filteredResults=m.filter { case(key,value) => "fruit".equals(value) }
+    val filteredResults=m.filter { case(key,value) => value.equals("fruit") }
     assert(filteredResults.size == 2)
   }
 
