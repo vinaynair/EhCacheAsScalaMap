@@ -8,12 +8,31 @@ class CacheAsMapSuite extends FunSuite {
 
   test("add, remove and get on a cache") {
     val m = new CacheAsMap[Int, String]
+    //add key+value pair using the following syntax
     m(1) = "a"
+    //or
     m += (2 -> "b")
-    assert(2 == m.size)
+    //or, since its mutable
+    m+(3->"c")
+    assert(3 == m.size)
+    //add to cache maps
+    val n = new CacheAsMap[Int,String]()
+    n(4)="d"
+    //or, add the entire cache map over
+    n++=m
+    assert(4==n.size)
+    assert(3==m.size)
+
+    //remove
     m -= 2
-    assert(1 == m.size)
+    assert(2 == m.size)
+    //or, remove more than one key at a time
+    n -=(1,2)
+    assert(2 == n.size)
+    //get
     assert("a" == m(1))
+
+
   }
 
   test("filter on a cache") {
@@ -24,7 +43,27 @@ class CacheAsMapSuite extends FunSuite {
     assert(m.filter(kv => "fruit".equals(kv._2)).size == 2)
   }
 
+  test("transform on a cache using a function"){
+    val m = new CacheAsMap[Int,Int]()
+    m(1)=1
+    m(2)=2
+    m(3)=3
+    assert(1==m(1))
+    m transform ((k,v)=>v+1)
+    assert(2==m(1))
 
+  }
+
+  test("other common map ops on cache"){
+    val m = new CacheAsMap[String,String]()
+    //getOrElse
+    val thingType=m getOrElse("mango","fruit")
+    assert("fruit"==thingType)
+    m("pineapple")="fruits"
+    assert(m contains "pineapple")
+    m+("orange"->"fruits")
+    assert(2==m.size)
+  }
 
   test("create a cache given constraints") {
     val m = new CacheAsMap[Int, String](new CacheBuilder(name = "myCache", maxEntriesInHeap = 1000))
