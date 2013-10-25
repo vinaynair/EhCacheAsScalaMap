@@ -8,9 +8,9 @@ class CacheBuilderTestSuite extends FunSuite {
 
   test("basic onheap cache") {
     val cache = new CacheBuilder(name = "onHeapCache").build
-    assert(cache != null)
+    assert(cache != null,"cache cannot be null")
     cache.put(new Element("a", "b"))
-    assert(cache.get("a").getObjectValue == "b")
+    assert(cache.get("a").getObjectValue === "b","cache get did not work")
   }
 
   /**

@@ -14,23 +14,23 @@ class CacheAsMapSuite extends FunSuite {
     m += (2 -> "b")
     //or, since its mutable
     m+(3->"c")
-    assert(3 == m.size)
+    assert(m.size===3, "Did not find 3 KV pairs")
     //add to cache maps
     val n = new CacheAsMap[Int,String]()
     n(4)="d"
     //or, add the entire cache map over
     n++=m
-    assert(4==n.size)
-    assert(3==m.size)
+    assert(n.size===4,"addition of 2 caches did not work")
+    assert(m.size===3,"addition affected one of the caches being added")
 
     //remove
     m -= 2
-    assert(2 == m.size)
+    assert( m.size==2,"remove on cache did not work")
     //or, remove more than one key at a time
     n -=(1,2)
-    assert(2 == n.size)
+    assert(n.size===2,"remove with more than one keys did not work")
     //get
-    assert("a" == m(1))
+    assert("a" === m(1),"get did not work")
 
 
   }
@@ -41,7 +41,7 @@ class CacheAsMapSuite extends FunSuite {
     m("potato") = "vegetable"
     m("grapes") = "fruit"
     val filteredResults=m.filter { case(key,value) => value.equals("fruit") }
-    assert(filteredResults.size == 2)
+    assert(filteredResults.size === 2,"filter did not work")
   }
 
   test("transform on a cache using a function"){
@@ -49,9 +49,9 @@ class CacheAsMapSuite extends FunSuite {
     m(1)=1
     m(2)=2
     m(3)=3
-    assert(1==m(1))
+    assert(1===m(1),"hget did not work")
     m transform ((k,v)=>v+1)
-    assert(2==m(1))
+    assert(2===m(1),"transform did not work")
 
   }
 
@@ -59,11 +59,11 @@ class CacheAsMapSuite extends FunSuite {
     val m = new CacheAsMap[String,String]()
     //getOrElse
     val thingType=m getOrElse("mango","fruit")
-    assert("fruit"==thingType)
+    assert("fruit"===thingType,"getOrElse did not work")
     m("pineapple")="fruits"
-    assert(m contains "pineapple")
+    assert(m contains "pineapple","contains ops did not work")
     m+("orange"->"fruits")
-    assert(2==m.size)
+    assert(2===m.size,"simple size doesnot work")
   }
 
   test("create a cache given constraints") {
@@ -73,7 +73,7 @@ class CacheAsMapSuite extends FunSuite {
     }
     //not a real check since the cache can expand to beyond 1000 and stay that way for a while or
     // at least until it feels the memory pressure
-    assert(m.size >= 1000 && m.size < 2000)
+    assert(m.size >= 1000 && m.size < 2000,"cache constraints set were not honored")
   }
 
   /** Requires Terracotta BigMemory license for offheap support
